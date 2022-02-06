@@ -142,3 +142,28 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+/******************** Footer Section ********************/
+.webpage-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #82c0cc;
+  color:#f9f8f8;
+  height: 70px;
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+}
+.webpage-footer h2 {
+  padding: 10px;
+}
+.webpage-footer a {
+  color:#f9f8f8;
+}
+.webpage-footer a:visited {
+  color:#f9f8f8;
+}
+.fa-github {
+  font-size: 40px;
+}
