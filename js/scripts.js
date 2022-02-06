@@ -1,6 +1,6 @@
 import Book from "./books.js";
 
-// Code to trigger the form to scale up and down
+// Trigger the form to scale up and down
 const openForm = document.querySelector("#open-form");
 const closeForm = document.querySelector("#close-form");
 const popUpForm = document.querySelector("#popup-form");
@@ -20,3 +20,10 @@ function closePopupForm() {
 
 openForm.addEventListener("click", openPopupForm);
 closeForm.addEventListener("click", closePopupForm);
+
+// Collect data from the form
+const title = document.querySelector("#title").value;
+const author = document.querySelector("#author").value;
+const numberOfPages = + document.querySelector("#total-pages").value;
+const currentPage = + document.querySelector("#current-page").value;
+
