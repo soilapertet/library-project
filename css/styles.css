@@ -22,7 +22,7 @@ body {
   background-color:#f9f8f8; 
 }
 .button-13 {
-  background-color: #fff;
+  background-color: #f9f8f8; 
   border: 1px solid #d5d9d9;
   border-radius: 8px;
   box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
@@ -141,6 +141,44 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/******************* Add Button *************************/
+.add-book {
+  margin: 2vw 0 0 10vw; /*top right bottom left*/
+  padding: 70px 50px;
+  background-color: #82c0cc;
+  border: none;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  transition: transform 0.8s; /* Animation */
+}
+.add-book:hover {
+  transform: scale(1.1); 
+}
+.plus-sign {
+  color: #f9f8f8;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-size: 180px;
+
+  /* Make plus sign return to original position after hover */
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  transition: all 0.3s;
+  transition-timing-function: ease-in-out;
+}
+
+/* When we hover the button, the plus sign rotates 90 degrees */
+.add-book:hover .plus-sign {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  transition: all 0.3s;
+  transition-timing-function: ease-in-out;
 }
 
 /******************** Footer Section ********************/
