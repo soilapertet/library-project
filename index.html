@@ -7,8 +7,8 @@
   <title>Carpe Librum</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/styles.css">
-  <script src="js/books.js"></script>
-  <script src="js/scripts.js"></script>
+  <script type="module" src="js/books.js" defer></script>
+  <script type="module" src="js/scripts.js" defer></script>
 </head>
 <body>
   <header class="webpage-header">
@@ -28,11 +28,58 @@
     </div>
   </header>
   <main>
-    <button class="add-book"><span class="plus-sign">+</span></button>
+    <button id="open-form" role="button" type="button"><span class="plus-sign">+</span></button>
   </main>
   <footer class="webpage-footer">
     <h2>&copy; Copyright 2022 Soila Pertet</h2>
     <a href="https://github.com/soilapertet"><i class="fa fa-github"></i></a>
   </footer>
+
+  <!-- Place after the footer section to cover the whole viewport -->
+  <!-- Popup Div Starts Here -->
+  <section id="popup-form">
+    <form class="book-form">
+      <div class="form-heading">
+        <h1 style="text-align:center; color:#2e282a;">New Book</h1>
+        <img src="img/close-button.png" alt="Close button" id="close-form">
+      </div>
+      <div class="form-group">
+        <input type="text" id="title" placeholder="Title" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <input type="text" id="author" placeholder="Author" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <input type="number" id="total-pages" placeholder="Number of Pages" required>
+      </div>
+      <br>
+      <div class="form-group">
+        <input type="number" id="current-page" placeholder="Current Page" required>
+      </div>
+      <div class="radio-buttons">
+        <h3>Book Status</h3>
+        <section id="book-status">
+          <div>
+            <input type="radio" name="book-status" id="plan-to-read" required>
+            <label for="plan-to-read">Plan To Read</label>
+          </div>
+          <div>
+            <input type="radio" name="book-status" id="on-hold">
+            <label for="on-hold">On Hold</label>
+          </div>
+          <div>
+            <input type="radio" name="book-status" id="completed">
+            <label for="completed">Completed</label>
+          </div>
+        </section>
+        <br>
+      </div>
+      <button type="submit" id="add-book" class="button-32">Add Book</button>
+    </form>
+  </section>
+  <!-- Popup Div Ends here -->
+  <div class="overlay"></div>
 </body>
 </html>

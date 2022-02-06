@@ -1,11 +1,14 @@
 /**
 * Color palette
-* https://coolors.co/f9f8f8-ee964b-494850-2c2c34
 * Cultured: #f9f8f8;
 * Sandy brown: #ee964b;
 * Dark Liver: #494850;
 * Raisin Black: #2c2c34;
+* Ming: #16697a;
+* Pacific blue: #489fb5;
 * Middle blue: #82c0cc;
+* Black: #000000;
+* Selective yellow: #f7b801;
 */
 
 
@@ -43,15 +46,38 @@ body {
   vertical-align: middle;
   width: 100px;
 }
-
 .button-13:hover {
   background-color: #f7fafa;
 }
-
 .button-13:focus {
   border-color: #008296;
   box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
   outline: 0;
+}
+
+.button-32 {
+  background-color: #f9a620;
+  color: #000000;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 5px 10px;
+  width: 50%;
+}
+.button-32:disabled {
+  pointer-events: none;
+}
+
+.button-32:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-32:active {
+  box-shadow: none;
+  transform: translateY(0);
 }
 
 /****************** Header Section *********************/
@@ -144,7 +170,7 @@ input:checked + .slider:before {
 }
 
 /******************* Add Button *************************/
-.add-book {
+#open-form {
   margin: 2vw 0 0 10vw; /*top right bottom left*/
   padding: 70px 50px;
   background-color: #82c0cc;
@@ -155,7 +181,7 @@ input:checked + .slider:before {
   cursor: pointer;
   transition: transform 0.8s; /* Animation */
 }
-.add-book:hover {
+#open-form:hover {
   transform: scale(1.1); 
 }
 .plus-sign {
@@ -174,7 +200,7 @@ input:checked + .slider:before {
 }
 
 /* When we hover the button, the plus sign rotates 90 degrees */
-.add-book:hover .plus-sign {
+#open-form:hover .plus-sign {
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
   transition: all 0.3s;
@@ -205,3 +231,86 @@ input:checked + .slider:before {
 .fa-github {
   font-size: 40px;
 }
+
+/***************** Popup Form *******************/
+#popup-form {
+  position: fixed;
+  top: 8vw; left: 40vw;
+  z-index: 110;
+  width: 25%;
+  height: auto;
+  transform: scale(0); /* Scale down the pop-up form */
+}
+#popup-form.show {
+  transform: scale(1); /* Scale up pop-up form */
+  transition: transform 0.5s; /* Transition lasts 0.5s */
+}
+#popup-form.hide {
+  transform: scale(0);
+  transition: transform 0.5s;
+}
+.form-heading {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 10px;
+}
+.form-heading h1 {
+  margin: 0 0 10px 0;
+  font-size: 40px;
+}
+.form-heading img {
+  width: 50px;
+  cursor: pointer;
+  margin: 5px 0 5px 15px;
+}
+.book-form {
+  background-color: #82c0cc;
+  color: #2e282a;
+  font-size: 18px;
+  border-radius: 25px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.form-group {
+  text-align: center;
+}
+.form-group input {
+  width: 80%;
+  height: 30px;
+  border: 2px solid #f9f8f8;
+  border-radius: 5px;
+}
+#book-status {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#book-status > div {
+  display:block;
+}
+.radio-buttons, #add-book {
+  margin: 0 auto;
+}
+#add-book {
+  align-self: flex-start;
+}
+
+/**************** Overlay *****************/
+.overlay {
+  display: none; /* Hide the overlay */
+  opacity: 0.5;
+  background: #2c2c34;
+  position: fixed;
+  top: 0; left: 0; /* Add overlay to the entire html  */
+  width: 100vw; height: 100vw; /* Add overlay to the entire html  */
+  z-index: 100;
+  cursor: pointer;
+  transition: opacity 1s ease;
+}
+.overlay.show {
+  display: block; /* Show the overlay */
+}
+
+
