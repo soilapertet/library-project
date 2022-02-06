@@ -80,6 +80,64 @@ body {
   transform: translateY(0);
 }
 
+.button-56 {
+  align-items: center;
+  background-color: #fee6e3;
+  border: 2px solid #111;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-56:after {
+  background-color: #111;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+.button-56:hover:after {
+  transform: translate(0, 0);
+}
+
+.button-56:active {
+  background-color: #ffdeda;
+  outline: 0;
+}
+
+.button-56:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .button-56 {
+    padding: 0 40px;
+  }
+}
+
 /****************** Header Section *********************/
 .webpage-header {
   background-color: #82c0cc;
@@ -169,42 +227,27 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/******************* Add Button *************************/
+/******************** Main Section    *************************/
+main h1 {
+  text-align: center;
+}
+main h1.hide {
+  display: none;
+}
+
+/******************* Open Form Button *************************/
 #open-form {
-  margin: 2vw 0 0 10vw; /*top right bottom left*/
-  padding: 70px 50px;
-  background-color: #82c0cc;
-  border: none;
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
-  cursor: pointer;
-  transition: transform 0.8s; /* Animation */
-}
-#open-form:hover {
-  transform: scale(1.1); 
-}
-.plus-sign {
+  background-color: #16697a;
   color: #f9f8f8;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  font-size: 180px;
-
-  /* Make plus sign return to original position after hover */
-  -webkit-transform: rotate(0deg);
-  transform: rotate(0deg);
-  transition: all 0.3s;
-  transition-timing-function: ease-in-out;
+  font-weight: bold;
+  font-size: 18px;
+  left: 41vw;
 }
-
-/* When we hover the button, the plus sign rotates 90 degrees */
-#open-form:hover .plus-sign {
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
-  transition: all 0.3s;
-  transition-timing-function: ease-in-out;
+#open-form::after {
+  background-color:#2c2c34;
+}
+#open-form.add-margin {
+  margin-top: 20px;
 }
 
 /******************** Footer Section ********************/
@@ -235,7 +278,7 @@ input:checked + .slider:before {
 /***************** Popup Form *******************/
 #popup-form {
   position: fixed;
-  top: 8vw; left: 40vw;
+  top: 8vw; left: 37vw;
   z-index: 110;
   width: 25%;
   height: auto;
