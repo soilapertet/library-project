@@ -2,17 +2,17 @@ class Book {
   constructor (
     name,
     author,
-    bookStatus,
     totalPageNumber,
     currentPageNumber,
+    bookStatus,
   )
   {
     this.name = name;
     this.author = author;
-    this.bookStatus = bookStatus;
-    this,totalPageNumber = totalPageNumber;
+    this.totalPageNumber = totalPageNumber;
     this.currentPageNumber = currentPageNumber;
+    this.bookStatus = bookStatus;
   }
 }
 
-// export default Book;
+export default Book;
