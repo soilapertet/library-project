@@ -263,7 +263,7 @@ input:checked + .slider:before {
   cursor: pointer;
   margin: 5px 0 5px 15px;
 }
-.book-form {
+.input-form {
   background-color: #82c0cc;
   color: #2e282a;
   font-size: 18px;
