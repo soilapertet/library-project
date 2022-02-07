@@ -1,8 +1,25 @@
-import Book from "./books.js";
-
 // Declare variables
 let statusArray, radioValue,i;
 let bookLibrary = [];
+
+// Class function
+class Book {
+  constructor (
+    name,
+    author,
+    totalPageNumber,
+    currentPageNumber,
+    bookStatus,
+  )
+  {
+    this.name = name;
+    this.author = author;
+    this.totalPageNumber = totalPageNumber;
+    this.currentPageNumber = currentPageNumber;
+    this.bookStatus = bookStatus;
+  }
+}
+
 
 // Trigger the form to scale up and down
 const libraryMessage = document.querySelector(".library-message");
