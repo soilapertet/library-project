@@ -5,7 +5,9 @@ let statusArray, radioValue,i;
 let bookLibrary = [];
 
 // Trigger the form to scale up and down
-const libraryEmpty= document.querySelector("main h1");
+const libraryMessage = document.querySelector(".library-message");
+const libraryMessageHeading= document.querySelector(".library-message h1");
+const libraryMessageImage= document.querySelector(".library-message img");
 const openForm = document.querySelector("#open-form");
 const closeForm = document.querySelector("#close-form");
 const popUpForm = document.querySelector("#popup-form");
@@ -14,8 +16,9 @@ const addBookButton = document.querySelector("#add-book");
 const inputForm = document.querySelector(".input-form");
 
 function openPopupForm() {
-  libraryEmpty.classList.add("hide");
-  openForm.classList.add("add-margin");
+  libraryMessage.style.marginTop = "2vw"; /* Change the value of margin-top to 2vw*/ 
+  libraryMessageHeading.classList.add("hide");
+  libraryMessageImage.classList.add("hide");
   popUpForm.classList.remove("hide");
   popUpForm.classList.add("show");
   overlay.classList.add("show");
