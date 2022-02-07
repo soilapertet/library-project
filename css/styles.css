@@ -227,11 +227,12 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/******************** Main Section    *************************/
+/******************** Library Message Section    *************************/
 .library-message {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin-top: 5vw;
   line-height: 38px;
 }
@@ -247,6 +248,18 @@ input:checked + .slider:before {
 .library-message h1.hide, .library-message img.hide {
   display: none;
 }
+
+/******************** Library Books Section    *************************/
+#library-books {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-rows: repeat(auto, auto);
+  grid-gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+
 /******************* Open Form Button *************************/
 #open-form {
   background-color: #16697a;
@@ -334,20 +347,18 @@ input:checked + .slider:before {
   border: 2px solid #f9f8f8;
   border-radius: 5px;
 }
-#book-status {
+#add-book {
+  align-self: flex-start;
+  margin: 20px auto;
+}
+/* #book-status {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 #book-status > div {
   display:block;
-}
-.radio-buttons, #add-book {
-  margin: 0 auto;
-}
-#add-book {
-  align-self: flex-start;
-}
+} */
 
 /**************** Overlay *****************/
 .overlay {

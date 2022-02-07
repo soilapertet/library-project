@@ -33,16 +33,15 @@ function closePopupForm() {
 openForm.addEventListener("click", openPopupForm);
 closeForm.addEventListener("click", closePopupForm);
 
+/** 
 // Collect the value from the selected radio button 
 function collectRadioValue () {
 
   // Create a nodeList for input elements with name="book-status"
   statusArray = document.querySelectorAll("#book-status input");
 
-  /**
-   * Loop through each item in the nodeList to check which radio button is checked;
-   * Create a variable to store the value of the checked radio button;
-  */
+  // Loop through each item in the nodeList to check which radio button is checked;
+  // Create a variable to store the value of the checked radio button;
   for(i = 0; i < statusArray.length; i++) {
     if(statusArray[i].checked) {
       radioValue = statusArray[i].value;
@@ -50,6 +49,7 @@ function collectRadioValue () {
   }
   return radioValue;
 }
+*/
 
 // Create a function to create Book Objects
 function addBookToLibrary() {
@@ -74,11 +74,15 @@ function addBookToLibrary() {
   return newBook;
 }
 
-/**
- * Test out addToLibrary function
- * inputForm.addEventListener("submit", function(){
- * event.preventDefault();
- * addBookToLibrary();
- * inputForm.reset();
- * });
- */
+// Display each book on the page as cards
+const bookInfo = `
+
+`
+
+/**Test out addToLibrary function */
+ inputForm.addEventListener("submit", function(){
+  event.preventDefault();
+  addBookToLibrary();
+  inputForm.reset();
+ });
+ 
