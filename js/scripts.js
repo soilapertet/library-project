@@ -1,5 +1,5 @@
 // Declare variables
-let statusArray, radioValue,  i;
+let statusArray, radioValue,  i, currentPage;
 let bookLibrary = [];
 
 // Class function
@@ -31,7 +31,7 @@ const openFormButton = document.querySelector("#open-form");
 const closeFormButton = document.querySelector("#close-form");
 
 function openPopupForm() {
-  libraryMessage.style.marginTop = "2vw"; // Change the value of margin-top to 2vw 
+  libraryMessage.style.marginTop = "2vw"; 
   libraryMessageHeading.classList.add("hide");
   libraryMessageImage.classList.add("hide");
   popUpForm.classList.remove("hide");
@@ -45,16 +45,11 @@ function closePopupForm() {
   popUpForm.classList.add("hide");
 }
 
-openFormButton.addEventListener("click", openPopupForm);
-
-// Collect the value from the selected radio button 
+// Loop through the NodeList and checked which radio button is checked
 function collectRadioValue () {
 
-  // Create a nodeList for input elements with name="book-status"
-  statusArray = document.querySelectorAll("#book-status input");
+  statusArray = document.querySelectorAll("#book-status input"); 
 
-  // Loop through each item in the nodeList to check which radio button is checked;
-  // Create a variable to store the value of the checked radio button;
   for(i = 0; i < statusArray.length; i++) {
     if(statusArray[i].checked) {
       radioValue = statusArray[i].value;
@@ -63,21 +58,39 @@ function collectRadioValue () {
   return radioValue;
 }
 
+// Check which radio button is clicked and set the value of the current page
+const setCurrentPageNumber = () => {
+
+  if(document.querySelector("#plan-to-read").checked) {
+    document.querySelector("#current-page").setAttribute("disabled", "true");
+    currentPage = 0;
+  }
+  else if (document.querySelector("#reading").checked) {
+    document.querySelector("#current-page").removeAttribute("disabled");
+    currentPage = + document.querySelector("#current-page").value;
+  }
+  else {
+    document.querySelector("#current-page").setAttribute("disabled", "true");
+    currentPage = + document.querySelector("#total-pages").value;
+  }
+  return currentPage;
+}
+
+
+
 // Create a function to create Book Objects and push them to the array
 function pushBookToArray() {
 
-  // Collect data from the form
   let inputtedTitle = document.querySelector("#title").value;
   let inputtedAuthor = document.querySelector("#author").value;
-  let inputtedCurrentPage = + document.querySelector("#current-page").value;
   let inputtedNumberOfPages = + document.querySelector("#total-pages").value;
 
-  // Create Book objects using the Book class function
+
   let newBook = new Book (
     inputtedTitle,
     inputtedAuthor,
     collectRadioValue(),
-    inputtedCurrentPage,
+    setCurrentPageNumber(),
     inputtedNumberOfPages,
   ); 
   
@@ -92,7 +105,6 @@ function updateLibraryGrid () {
   resetLibraryGrid();
   pushBookToArray();
 
-  // Loop through array and perform function on each object
   bookLibrary.map(function(book){
     addBooksToLibrary(book);
   });
@@ -119,7 +131,7 @@ function addBooksToLibrary(book) {
   libraryBook.appendChild(bookAuthor);
 
   const currentBookStatus = document.createElement("p");
-  currentBookStatus.innerHTML = `Current Book Status: ${book.bookStatus}`;
+  currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
   libraryBook.appendChild(currentBookStatus);
 
   const bookPages = document.createElement("div");
@@ -175,6 +187,18 @@ function addBooksToLibrary(book) {
   libraryBooks.appendChild(libraryBook);
 }
 
+openFormButton.addEventListener("click", openPopupForm);
+closeFormButton.addEventListener("click", closePopupForm);
+
+// Add event listeners to radio buttons to set value for current page
+const planToRead = document.querySelector("#plan-to-read");
+const reading = document.querySelector("#reading");
+const completed = document.querySelector("#completed");
+
+planToRead.addEventListener("click", setCurrentPageNumber);
+reading.addEventListener("click", setCurrentPageNumber);
+completed.addEventListener("click", setCurrentPageNumber);
+
 
 const inputForm = document.querySelector(".input-form");
 
@@ -185,4 +209,4 @@ const inputForm = document.querySelector(".input-form");
   inputForm.reset();
   closePopupForm();
  });
- 
+
