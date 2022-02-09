@@ -2,6 +2,33 @@
 let statusArray, radioValue,  i, currentPage;
 let bookLibrary = [];
 
+// Function for rating the books
+function executeRating(stars) {
+
+  const starClassActive = "rating__star fas fa-star";
+  const starClassInactive = "rating__star far fa-star";
+  const starsLength = stars.length;
+  let j;
+  stars.map(function(star) {
+    star.onclick = function() {
+      // set j to the value of the index of the star clicked
+      j = stars.indexOf(star); 
+
+      // Check if the star is "active"/"inactive"
+      if (star.className === starClassInactive) {
+        for (j; j >= 0; --j) {
+          stars[j].className = starClassActive; // make the "inactive" stars "active"; increase rating
+        } 
+      } 
+      else {
+        for (j; j < starsLength; ++j) {
+          stars[j].className = starClassInactive; // make the "active" stars inactive; decrease rating
+        }
+      }
+    };
+  });
+}
+
 // Class function
 class Book {
   constructor (
@@ -21,7 +48,6 @@ class Book {
 }
 
 // Open and Close popup form 
-
 const libraryMessage = document.querySelector(".library-message");
 const libraryMessageHeading= document.querySelector(".library-message h1");
 const libraryMessageImage= document.querySelector(".library-message img");
@@ -76,8 +102,6 @@ const setCurrentPageNumber = () => {
   return currentPage;
 }
 
-
-
 // Create a function to create Book Objects and push them to the array
 function pushBookToArray() {
 
@@ -89,13 +113,12 @@ function pushBookToArray() {
   let newBook = new Book (
     inputtedTitle,
     inputtedAuthor,
-    collectRadioValue(),
-    setCurrentPageNumber(),
+    collectRadioValue(), // return radioValue
+    setCurrentPageNumber(), // return currentPage
     inputtedNumberOfPages,
   ); 
   
   bookLibrary.push(newBook);
-  console.log(bookLibrary);
   return bookLibrary;
 }
 
@@ -108,6 +131,11 @@ function updateLibraryGrid () {
   bookLibrary.map(function(book){
     addBooksToLibrary(book);
   });
+
+  const collectStars = document.querySelectorAll(".rating__star");
+  const ratingStars = Array.from(collectStars); // convert NodeList to an array;
+  executeRating(ratingStars);
+
 }
 
 // Reset library grid on the page
@@ -115,7 +143,7 @@ function resetLibraryGrid() {
   const libraryGrid = document.querySelector("#library-books"); 
   libraryGrid.innerHTML = "";
 }
-
+// Display each book object in the array on the webpage
 function addBooksToLibrary(book) {
 
   const libraryBook = document.createElement("section");
@@ -147,7 +175,6 @@ function addBooksToLibrary(book) {
 
   const updateBookStatus = document.createElement("div");
   updateBookStatus.classList.add("status");
-  
   const selectStatusContent = `
     <p>Book Status:</p>
     <select name="book-status">
@@ -161,7 +188,6 @@ function addBooksToLibrary(book) {
 
   const bookRating = document.createElement("div");
   bookRating.classList.add("rating");
-
   const ratingContent = `
     <p>Book Rating:</p>
     <i class="rating__star far fa-star"></i>
@@ -187,6 +213,7 @@ function addBooksToLibrary(book) {
   libraryBooks.appendChild(libraryBook);
 }
 
+// Add event listeners to "open-form" and "close-form" buttons
 openFormButton.addEventListener("click", openPopupForm);
 closeFormButton.addEventListener("click", closePopupForm);
 
