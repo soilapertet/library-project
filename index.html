@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carpe Librum</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>  <script src="scripts.js" defer></script>
   <link rel="stylesheet" href="css/styles.css">
   <script type="module" src="js/scripts.js" defer></script>
 </head>
@@ -54,15 +55,7 @@
       <div class="form-group">
         <input type="text" id="author" placeholder="Author" required>
       </div>
-      <br>
-      <div class="form-group">
-        <input type="number" id="total-pages" placeholder="Number of Pages" required>
-      </div>
-      <br>
-      <div class="form-group">
-        <input type="number" id="current-page" placeholder="Current Page" required>
-      </div>
-      <!-- <div class="radio-buttons">
+      <div class="radio-buttons">
         <h3>Book Status</h3>
         <section id="book-status">
           <div>
@@ -79,7 +72,16 @@
           </div>
         </section>
         <br>
-      </div> -->
+      </div>
+      <div class="form-group">
+        <input type="number" id="current-page" placeholder="Current Page" required>
+        <p><em>Enter "0" if you selected "Plan To Read"</em></p>
+        <p><em>Enter the total number of pages if you selected "Completed"</em></p>
+      </div>
+      <div class="form-group">
+        <input type="number" id="total-pages" placeholder="Total number of Pages" required>
+      </div>
+      <br>
       <button type="submit" id="add-book" class="button-32">Add Book</button>
     </form>
   </section>

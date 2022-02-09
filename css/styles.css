@@ -253,12 +253,73 @@ input:checked + .slider:before {
 #library-books {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-template-rows: repeat(auto, auto);
   grid-gap: 20px;
+  margin: 20px;
+}
+.library-book {
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 5px solid #16697a;
+  border-radius: 20px;
+  background-color: #82c0cc;
+  font-size: 20px;
+  padding: 10px;
+}
+.library-book h1 {
+  border-bottom: 3px dashed  #f9f8f8;
+  margin: 0;
+  text-align: center;
+}
+.library-book p {
+  margin: 5px;
+}
+.library-book p:first-of-type {
+  margin: 5px;
+}
+.book-pages {
+  display: flex;
   align-items: center;
+}
+.fa-plus-circle {
+  margin: 0 10px;
+  color: #2c2c34;
+  cursor: pointer;
+}
+.status {
+  display: flex;
+  align-items: center;
+}
+.status > p {
+  margin: 0 10px;
+}
+.status > select {
+  background-color: #16697a;
+  color: #f9f8f8;
+  font-size: 20px;
+  padding: 2px;
+  width: 150px;
+  border: 2px solid #2c2c34;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.rating {
+  margin-bottom: 15px;
+  text-align: center;
+}
+.rating__star {
+  cursor: pointer;
+  color: #f9e900;
+}
+.btn {
+  display:flex;
   justify-content: center;
 }
-
+#remove-button {
+  background-color: #16697a;
+  color: #f9f8f8;
+  border: 3px solid #2c2c34;
+}
 
 /******************* Open Form Button *************************/
 #open-form {
@@ -280,9 +341,9 @@ input:checked + .slider:before {
   background-color: #82c0cc;
   color:#f9f8f8;
   height: 70px;
-  position: absolute;
-  bottom: 0;
   width: 100vw;
+  position: fixed;
+  bottom: 0;
 }
 .webpage-footer h2 {
   padding: 10px;
@@ -347,18 +408,23 @@ input:checked + .slider:before {
   border: 2px solid #f9f8f8;
   border-radius: 5px;
 }
-#add-book {
+.radio-buttons {
+  margin: 0 auto;
+}
+.radio-buttons h3 {
+  margin-bottom: 5px;
+}
+.form-group p {
+  margin: 5px;
+}
+em {
+  font-size: 14px;
+  color: red;
+}
+ #add-book {
   align-self: flex-start;
   margin: 20px auto;
 }
-/* #book-status {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-#book-status > div {
-  display:block;
-} */
 
 /**************** Overlay *****************/
 .overlay {
