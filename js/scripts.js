@@ -2,33 +2,6 @@
 let statusArray, radioValue,  i, currentPage, pageNumber;
 let bookLibrary = [];
 
-// Function for rating the books
-function executeRating(stars) {
-
-  const starClassActive = "rating__star fas fa-star";
-  const starClassInactive = "rating__star far fa-star";
-  const starsLength = stars.length;
-  let j;
-  stars.map(function(star) {
-    star.onclick = function() {
-      // set j to the value of the index of the star clicked
-      j = stars.indexOf(star); 
-
-      // Check if the star is "active"/"inactive"
-      if (star.className === starClassInactive) {
-        for (j; j >= 0; --j) {
-          stars[j].className = starClassActive; // make the "inactive" stars "active"; increase rating
-        } 
-      } 
-      else {
-        for (j; j < starsLength; ++j) {
-          stars[j].className = starClassInactive; // make the "active" stars inactive; decrease rating
-        }
-      }
-    };
-  });
-}
-
 // Class function
 class Book {
   constructor (
@@ -71,6 +44,11 @@ function closePopupForm() {
   popUpForm.classList.add("hide");
 }
 
+// Add event listeners to "open-form" and "close-form" buttons
+openFormButton.addEventListener("click", openPopupForm);
+closeFormButton.addEventListener("click", closePopupForm);
+
+
 // Loop through the NodeList and checked which radio button is checked
 function collectRadioValue () {
 
@@ -83,9 +61,9 @@ function collectRadioValue () {
   }
   return radioValue;
 }
-
 // Check which radio button is clicked and set the value of the current page
-const setCurrentPageNumber = () => {
+const setCurrentPageNumber = (book) => {
+  
 
   if(document.querySelector("#plan-to-read").checked) {
     document.querySelector("#current-page").setAttribute("disabled", "true");
@@ -100,6 +78,21 @@ const setCurrentPageNumber = () => {
     currentPage = + document.querySelector("#total-pages").value;
   }
   return currentPage;
+}
+
+// Add event listeners to radio buttons to set value for current page
+const planToRead = document.querySelector("#plan-to-read");
+const reading = document.querySelector("#reading");
+const completed = document.querySelector("#completed");
+
+planToRead.addEventListener("click", setCurrentPageNumber);
+reading.addEventListener("click", setCurrentPageNumber);
+completed.addEventListener("click", setCurrentPageNumber);
+
+// Reset library grid on the page
+function resetLibraryGrid() {
+  const libraryGrid = document.querySelector("#library-books"); 
+  libraryGrid.innerHTML = "";
 }
 
 // Create a function to create Book Objects and push them to the array
@@ -122,22 +115,23 @@ function pushBookToArray() {
   return bookLibrary;
 }
 
+/** 
 // Set book status
-// function setBookStatus() {
+function setBookStatus() {
 
-//   if(document.querySelector("#plan-to-read").checked) {
-//     document.querySelector("select").value = collectRadioValue();
-//   }
-//   else if(document.querySelector("#reading").checked) {
-//     document.querySelector("select").value = collectRadioValue();
-//   }
-//   else {
-//     document.querySelector("select").value = collectRadioValue();
-//   }
+  if(document.querySelector("#plan-to-read").checked) {
+    document.querySelector("select").value = collectRadioValue();
+  }
+  else if(document.querySelector("#reading").checked) {
+    document.querySelector("select").value = collectRadioValue();
+  }
+  else {
+    document.querySelector("select").value = collectRadioValue();
+  }
 
-// };
+};
 
-//  Increase page number
+//Increase page number
 function increasePageNumber () {
   pageNumber = + document.querySelector(".library-book input").value;
 
@@ -145,33 +139,8 @@ function increasePageNumber () {
    document.querySelector(".library-book input").value = pageNumber;
    console.log(pageNumber);
 }
+*/
 
-//  Update library grid on the page
-function updateLibraryGrid () {
-
-  resetLibraryGrid();
-  pushBookToArray();
-
-  bookLibrary.map(function(book){
-    addBooksToLibrary(book);
-  });
-
-  // setBookStatus();
-
-  const collectStars = document.querySelectorAll(".rating__star");
-  const ratingStars = Array.from(collectStars); // convert NodeList to an array;
-  executeRating(ratingStars);
-
-  //  Add event listener to plus icon
-  const plusButton = document.querySelector(".fa-plus-circle");
-  plusButton.addEventListener("click", increasePageNumber);
-}
-
-// Reset library grid on the page
-function resetLibraryGrid() {
-  const libraryGrid = document.querySelector("#library-books"); 
-  libraryGrid.innerHTML = "";
-}
 // Display each book object in the array on the webpage
 function addBooksToLibrary(book) {
 
@@ -240,18 +209,49 @@ function addBooksToLibrary(book) {
   libraryBooks.appendChild(libraryBook);
 }
 
-// Add event listeners to "open-form" and "close-form" buttons
-openFormButton.addEventListener("click", openPopupForm);
-closeFormButton.addEventListener("click", closePopupForm);
+// Function for rating the books
+function executeRating(stars) {
 
-// Add event listeners to radio buttons to set value for current page
-const planToRead = document.querySelector("#plan-to-read");
-const reading = document.querySelector("#reading");
-const completed = document.querySelector("#completed");
+  const starClassActive = "rating__star fas fa-star";
+  const starClassInactive = "rating__star far fa-star";
+  const starsLength = stars.length;
+  let j;
+  stars.map(function(star) {
+    star.onclick = function() {
+      // set j to the value of the index of the star clicked
+      j = stars.indexOf(star); 
 
-planToRead.addEventListener("click", setCurrentPageNumber);
-reading.addEventListener("click", setCurrentPageNumber);
-completed.addEventListener("click", setCurrentPageNumber);
+      // Check if the star is "active"/"inactive"
+      if (star.className === starClassInactive) {
+        for (j; j >= 0; --j) {
+          stars[j].className = starClassActive; // make the "inactive" stars "active"; increase rating
+        } 
+      } 
+      else {
+        for (j; j < starsLength; ++j) {
+          stars[j].className = starClassInactive; // make the "active" stars inactive; decrease rating
+        }
+      }
+    };
+  });
+}
+
+// Update library grid on the page
+function updateLibraryGrid () {
+
+  resetLibraryGrid();
+  pushBookToArray();
+
+  bookLibrary.map(function(book){
+    addBooksToLibrary(book);
+    setCurrentPageNumber(book);
+  });
+  
+  const collectStars = document.querySelectorAll(".rating__star");
+  const ratingStars = Array.from(collectStars); // convert NodeList to an array;
+  executeRating(ratingStars);
+
+}
 
 const inputForm = document.querySelector(".input-form");
 
