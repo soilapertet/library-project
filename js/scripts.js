@@ -1,5 +1,5 @@
 // Declare variables
-let statusArray, radioValue,  i, currentPage;
+let statusArray, radioValue,  i, currentPage, pageNumber;
 let bookLibrary = [];
 
 // Function for rating the books
@@ -122,6 +122,30 @@ function pushBookToArray() {
   return bookLibrary;
 }
 
+// Set book status
+// function setBookStatus() {
+
+//   if(document.querySelector("#plan-to-read").checked) {
+//     document.querySelector("select").value = collectRadioValue();
+//   }
+//   else if(document.querySelector("#reading").checked) {
+//     document.querySelector("select").value = collectRadioValue();
+//   }
+//   else {
+//     document.querySelector("select").value = collectRadioValue();
+//   }
+
+// };
+
+//  Increase page number
+function increasePageNumber () {
+  pageNumber = + document.querySelector(".library-book input").value;
+
+  pageNumber = ++ pageNumber;
+   document.querySelector(".library-book input").value = pageNumber;
+   console.log(pageNumber);
+}
+
 //  Update library grid on the page
 function updateLibraryGrid () {
 
@@ -132,10 +156,15 @@ function updateLibraryGrid () {
     addBooksToLibrary(book);
   });
 
+  // setBookStatus();
+
   const collectStars = document.querySelectorAll(".rating__star");
   const ratingStars = Array.from(collectStars); // convert NodeList to an array;
   executeRating(ratingStars);
 
+  //  Add event listener to plus icon
+  const plusButton = document.querySelector(".fa-plus-circle");
+  plusButton.addEventListener("click", increasePageNumber);
 }
 
 // Reset library grid on the page
@@ -164,15 +193,13 @@ function addBooksToLibrary(book) {
 
   const bookPages = document.createElement("div");
   bookPages.classList.add("book-pages");
-  const pages = document.createElement("p");
-  pages.innerHTML = `Pages: ${book.currentPageNumber}/${book.totalPageNumber}`;
-  bookPages.appendChild(pages);
-  const icon = document.createElement("i");
-  icon.classList.add("fas","fa-plus-circle","increase-page");
-  bookPages.appendChild(icon);
+  const pagesContent = `
+    <p>Pages:<input type="text" id="page-number" value="${book.currentPageNumber}">/${book.totalPageNumber}</p>
+    <i class="fas fa-plus-circle increase-page" type="button"></i> 
+  `;
+  bookPages.innerHTML = pagesContent;
   libraryBook.appendChild(bookPages);
-
-
+  
   const updateBookStatus = document.createElement("div");
   updateBookStatus.classList.add("status");
   const selectStatusContent = `
@@ -225,7 +252,6 @@ const completed = document.querySelector("#completed");
 planToRead.addEventListener("click", setCurrentPageNumber);
 reading.addEventListener("click", setCurrentPageNumber);
 completed.addEventListener("click", setCurrentPageNumber);
-
 
 const inputForm = document.querySelector(".input-form");
 

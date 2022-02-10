@@ -281,6 +281,15 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
 }
+#page-number {
+  width: 50px;
+  font-size: 22px;
+  font-weight: normal;
+  border: 2px solid #82c0cc;
+  background-color: #82c0cc;
+  color: #f9f8f8;
+  text-align: right;
+}
 .fa-plus-circle {
   margin: 0 10px;
   color: #2c2c34;
