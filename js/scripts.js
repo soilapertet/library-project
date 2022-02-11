@@ -151,12 +151,6 @@ function updateLibraryGrid () {
   bookLibrary.map(function(book){
     addBooksToLibrary(book);
   });
-
-
-  const collectStars = document.querySelectorAll(".rating__star");
-  const ratingStars = Array.from(collectStars); // convert NodeList to an array;
-  executeRating(ratingStars);
-
 }
 
 // Display each book object in the array on the webpage`
@@ -263,6 +257,22 @@ function addBooksToLibrary(book) {
   // Update "select" value for the "select" element
   let setSelectValueArray = Array.from(document.querySelectorAll(".update-book-status"));
   setSelectValueArray[bookLibrary.indexOf(book)].value = book.bookStatus;
+
+  // Add 'change' event listener to the 'select' elements to change status if book is completed
+  setSelectValueArray.map(function(item){
+    item.addEventListener("change", (event) => {
+      if(event.target.value === "Completed"){
+        book.bookStatus = event.target.value;
+        console.log(book.bookStatus)
+        currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
+
+        book.currentPageNumber = book.totalPageNumber;
+        pagesContent.innerHTML = `
+        Pages: <input type="text" id="page-number" value="${book.currentPageNumber}">/${book.totalPageNumber}
+      `;
+      }
+    });
+  });
 
 }
 
