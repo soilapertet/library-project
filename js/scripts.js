@@ -14,6 +14,11 @@ function initiateBookLibrary() {
 
 initiateBookLibrary();
 
+// Save data to local storage
+function storeToLocalStorage(){
+  localStorage.setItem("bookLibrary", JSON.stringify(bookLibrary)); /** Saving any changes made to book object to local storage */
+}
+
 // Class function
 class Book {
   constructor (
@@ -159,9 +164,11 @@ function updateLibraryGrid () {
 
   resetLibraryGrid();
   pushBookToArray();
+  storeToLocalStorage();
 
   bookLibrary.map(function(book){
     addBooksToLibrary(book);
+    storeToLocalStorage();
   });
 
 }
@@ -207,6 +214,7 @@ function addBooksToLibrary(book) {
         let updateStatusArray = Array.from(document.querySelectorAll(".update-book-status"));
         updateStatusArray[bookLibrary.indexOf(book)].value = "Reading";
       }
+      storeToLocalStorage();
     });
 
     let pageNumberArray = document.querySelectorAll(".library-book input");
@@ -216,6 +224,7 @@ function addBooksToLibrary(book) {
     let pageValues = document.querySelectorAll(".library-book input");
     pageValues[bookLibrary.indexOf(book)].setAttribute("value", `${pageValue}`);
     book.currentPageNumber = pageValue;
+    storeToLocalStorage();
   });
 
   bookPages.appendChild(plusIcon);
@@ -269,7 +278,7 @@ function addBooksToLibrary(book) {
   // Update "select" value for the "select" element
   let setSelectValueArray = Array.from(document.querySelectorAll(".update-book-status"));
   setSelectValueArray[bookLibrary.indexOf(book)].value = book.bookStatus;
-
+  storeToLocalStorage();
 
   // Add 'change' event listener to the 'select' elements to change status if book is completed
   setSelectValueArray.map(function(item){
@@ -284,6 +293,7 @@ function addBooksToLibrary(book) {
         Pages: <input type="text" id="page-number" value="${book.currentPageNumber}">/${book.totalPageNumber}
       `;
       }
+      storeToLocalStorage();
     });
   });
 
