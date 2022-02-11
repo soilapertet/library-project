@@ -1,6 +1,18 @@
 // Declare variables
-let statusArray, radioValue,  i, currentPage, pageValue;
-let bookLibrary = [];
+let statusArray, radioValue,  i, currentPage, pageValue, bookLibrary;
+
+// Initiate bookLibrary array
+function initiateBookLibrary() {
+  if(JSON.parse(localStorage.getItem("bookLibrary") === null)) {
+    bookLibrary = [];
+  }
+  else {
+    bookLibrary = JSON.parse(localStorage.getItem("bookLibrary"));
+  }
+  return bookLibrary;
+}
+
+initiateBookLibrary();
 
 // Class function
 class Book {
@@ -151,6 +163,7 @@ function updateLibraryGrid () {
   bookLibrary.map(function(book){
     addBooksToLibrary(book);
   });
+
 }
 
 // Display each book object in the array on the webpage`
@@ -203,7 +216,6 @@ function addBooksToLibrary(book) {
     let pageValues = document.querySelectorAll(".library-book input");
     pageValues[bookLibrary.indexOf(book)].setAttribute("value", `${pageValue}`);
     book.currentPageNumber = pageValue;
-    console.log(book.currentPageNumber);
   });
 
   bookPages.appendChild(plusIcon);
@@ -257,6 +269,7 @@ function addBooksToLibrary(book) {
   // Update "select" value for the "select" element
   let setSelectValueArray = Array.from(document.querySelectorAll(".update-book-status"));
   setSelectValueArray[bookLibrary.indexOf(book)].value = book.bookStatus;
+
 
   // Add 'change' event listener to the 'select' elements to change status if book is completed
   setSelectValueArray.map(function(item){
