@@ -174,8 +174,7 @@ function updateLibraryGrid () {
 
 }
 
-
-// Display each book object in the array on the webpage
+// Display each book object in the array on the webpage`
 function addBooksToLibrary(book) {
 
   const libraryBook = document.createElement("section");
@@ -191,6 +190,7 @@ function addBooksToLibrary(book) {
   libraryBook.appendChild(bookAuthor);
 
   const currentBookStatus = document.createElement("p");
+  currentBookStatus.classList.add("current-status");
   currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
   libraryBook.appendChild(currentBookStatus);
 
@@ -205,7 +205,20 @@ function addBooksToLibrary(book) {
   plusIcon.classList.add("fas", "fa-plus-circle");
   // Add an event listener to the plus icon
   plusIcon.addEventListener("click", function(){
-    let pageNumber = + document.querySelectorAll(".library-book input")[bookLibrary.indexOf(book)].value;
+    // Update "Plan To Read" status to "Reading" status
+    let currentStatusArray = document.querySelectorAll(".current-status");
+    currentStatusArray.forEach(function(currentStatus){
+      if(currentStatus.textContent === "Book Status: Plan To Read") {
+        book.bookStatus = "Reading";
+        currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
+
+        let updateStatusArray = Array.from(document.querySelectorAll(".update-book-status"));
+        updateStatusArray[bookLibrary.indexOf(book)].value = "Reading";
+      }
+    });
+
+    let pageNumberArray = document.querySelectorAll(".library-book input");
+    let pageNumber = + pageNumberArray[bookLibrary.indexOf(book)].value;
     let pageValue = 0;
     pageValue = ++ pageNumber;
     let pageValues = document.querySelectorAll(".library-book input");
@@ -217,10 +230,10 @@ function addBooksToLibrary(book) {
   libraryBook.appendChild(bookPages);
 
   const updateBookStatus = document.createElement("div");
-  updateBookStatus.classList.add("status");
+  updateBookStatus.classList.add("update-status");
   const selectStatusContent = `
     <p>Book Status:</p>
-    <select name="book-status">
+    <select name="book-status" class="update-book-status">
       <option value="Plan To Read">Plan To Read</option>
       <option value="Reading">Reading</option>
       <option value="Completed">Completed</option>
@@ -228,6 +241,7 @@ function addBooksToLibrary(book) {
   `;
   updateBookStatus.innerHTML = selectStatusContent;
   libraryBook.appendChild(updateBookStatus);
+
 
   const bookRating = document.createElement("div");
   bookRating.classList.add("rating");
@@ -240,6 +254,12 @@ function addBooksToLibrary(book) {
     <i class="rating__star far fa-star"></i>
   `;
   bookRating.innerHTML = ratingContent;
+  bookRating.addEventListener("click", function(){
+    const collectStars = document.querySelectorAll(".rating__star");
+    const ratingStars = Array.from(collectStars); // convert NodeList to an array;
+    executeRating(ratingStars);
+  
+  })
   libraryBook.appendChild(bookRating);
 
   const removeBook = document.createElement("div");
