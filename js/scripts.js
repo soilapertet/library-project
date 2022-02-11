@@ -142,22 +142,6 @@ function executeRating(stars) {
   });
 }
 
-/** 
-// Set book status
-function setBookStatus() {
-
-  if(document.querySelector("#plan-to-read").checked) {
-    document.querySelector("select").value = collectRadioValue();
-  }
-  else if(document.querySelector("#reading").checked) {
-    document.querySelector("select").value = collectRadioValue();
-  }
-  else {
-    document.querySelector("select").value = collectRadioValue();
-  }
-
-};
-*/
 // Update library grid on the page
 function updateLibraryGrid () {
 
@@ -167,6 +151,7 @@ function updateLibraryGrid () {
   bookLibrary.map(function(book){
     addBooksToLibrary(book);
   });
+
 
   const collectStars = document.querySelectorAll(".rating__star");
   const ratingStars = Array.from(collectStars); // convert NodeList to an array;
@@ -226,6 +211,7 @@ function addBooksToLibrary(book) {
     book.currentPageNumber = pageValue;
     console.log(book.currentPageNumber);
   });
+
   bookPages.appendChild(plusIcon);
   libraryBook.appendChild(bookPages);
 
@@ -241,7 +227,6 @@ function addBooksToLibrary(book) {
   `;
   updateBookStatus.innerHTML = selectStatusContent;
   libraryBook.appendChild(updateBookStatus);
-
 
   const bookRating = document.createElement("div");
   bookRating.classList.add("rating");
@@ -274,6 +259,11 @@ function addBooksToLibrary(book) {
 
   const libraryBooks = document.querySelector("#library-books");
   libraryBooks.appendChild(libraryBook);
+
+  // Update "select" value for the "select" element
+  let setSelectValueArray = Array.from(document.querySelectorAll(".update-book-status"));
+  setSelectValueArray[bookLibrary.indexOf(book)].value = book.bookStatus;
+
 }
 
 const inputForm = document.querySelector(".input-form");
