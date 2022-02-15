@@ -12,8 +12,6 @@ function initiateBookLibrary() {
   return bookLibrary;
 }
 
-initiateBookLibrary();
-
 // Save data to local storage
 function storeToLocalStorage(){
   localStorage.setItem("bookLibrary", JSON.stringify(bookLibrary)); /** Saving any changes made to book object to local storage */
@@ -71,7 +69,7 @@ function collectRadioValue () {
 
   statusArray = document.querySelectorAll("#book-status input"); 
 
-  for(i = 0; i < statusArray.length; i++) {
+  for(i = 0; i < statusArray.length; ++i) {
     if(statusArray[i].checked) {
       radioValue = statusArray[i].value;
     }
@@ -119,7 +117,6 @@ function pushBookToArray() {
   let inputtedAuthor = document.querySelector("#author").value;
   let inputtedNumberOfPages = + document.querySelector("#total-pages").value;
 
-
   let book = new Book (
     inputtedTitle,
     inputtedAuthor,
@@ -129,6 +126,7 @@ function pushBookToArray() {
   ); 
 
   bookLibrary.push(book);
+  storeToLocalStorage();
   return bookLibrary;
 }
 
@@ -159,18 +157,24 @@ function executeRating(stars) {
   });
 }
 
+function addBookToLibraryGrid() {
+
+  initiateBookLibrary();
+  pushBookToArray();
+  updateLibraryGrid();
+
+}
+
 // Update library grid on the page
 function updateLibraryGrid () {
 
   resetLibraryGrid();
-  pushBookToArray();
-  storeToLocalStorage();
+  initiateBookLibrary();
 
   bookLibrary.map(function(book){
     addBooksToLibrary(book);
     storeToLocalStorage();
   });
-
 }
 
 // Display each book object in the array on the webpage`
@@ -301,11 +305,17 @@ function addBooksToLibrary(book) {
 
 const inputForm = document.querySelector(".input-form");
 
-/**Test out addToLibrary function */
- inputForm.addEventListener("submit", function(){
-  event.preventDefault();
+inputForm.addEventListener("submit", function(){
+event.preventDefault();
+addBookToLibraryGrid();
+inputForm.reset();
+closePopupForm();
+});
+
+window.addEventListener("load", function(){
+  libraryMessage.style.marginTop = "2vw"; 
+  libraryMessageHeading.classList.add("hide");
+  libraryMessageImage.classList.add("hide");
   updateLibraryGrid();
-  inputForm.reset();
-  closePopupForm();
- });
+});
 
