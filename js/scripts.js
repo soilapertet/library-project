@@ -276,12 +276,12 @@ function addBooksToLibrary(book) {
 
   // Update "select" value for the "select" element
   let setSelectValueArray = Array.from(document.querySelectorAll(".update-book-status"));
-  setSelectValueArray[bookLibrary.indexOf(book)].value = book.bookStatus;
+  let newSelectValue = setSelectValueArray[bookLibrary.indexOf(book)];
+  newSelectValue.value = book.bookStatus;
   storeToLocalStorage();
 
   // Add 'change' event listener to the 'select' elements to change status if book is completed
-  setSelectValueArray.map(function(item){
-    item.addEventListener("change", (event) => {
+    newSelectValue.addEventListener("change", (event) => {
       if(event.target.value === "Completed"){
         book.bookStatus = event.target.value;
         currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
@@ -292,7 +292,6 @@ function addBooksToLibrary(book) {
       `;
       }
       storeToLocalStorage();
-    });
   });
 
   // Remove book from library
