@@ -258,24 +258,19 @@ function addBooksToLibrary(book) {
     <i class="rating__star far fa-star"></i>
   `;
   bookRating.innerHTML = ratingContent;
-  bookRating.addEventListener("click", function(){
-    const collectStars = document.querySelectorAll(".rating__star");
-    const ratingStars = Array.from(collectStars); // convert NodeList to an array;
-    executeRating(ratingStars);
-  
-  })
   libraryBook.appendChild(bookRating);
 
   const removeBook = document.createElement("div");
   removeBook.classList.add("btn");
-  
-  const removeBookButton = `
-    <button class="button-32" id="remove-button">Remove</button>
-  `;
-
-  removeBook.innerHTML = removeBookButton;
+  const removeBookButton = document.createElement("button");
+  removeBookButton.classList.add("button-32");
+  removeBookButton.setAttribute("id", "remove-book");
+  removeBookButton.setAttribute("type", "button");
+  removeBookButton.setAttribute("role", "button");
+  removeBookButton.textContent = "Remove";
+  removeBook.appendChild(removeBookButton);
   libraryBook.appendChild(removeBook);
-
+  
   const libraryBooks = document.querySelector("#library-books");
   libraryBooks.appendChild(libraryBook);
 
@@ -289,7 +284,6 @@ function addBooksToLibrary(book) {
     item.addEventListener("change", (event) => {
       if(event.target.value === "Completed"){
         book.bookStatus = event.target.value;
-        console.log(book.bookStatus)
         currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
 
         book.currentPageNumber = book.totalPageNumber;
@@ -301,6 +295,12 @@ function addBooksToLibrary(book) {
     });
   });
 
+  // Remove book from library
+  removeBookButton.addEventListener("click", function(){
+    bookLibrary.splice(bookLibrary.indexOf(book), 1);
+    storeToLocalStorage();
+    updateLibraryGrid();
+  });
 }
 
 const inputForm = document.querySelector(".input-form");
