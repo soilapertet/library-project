@@ -206,31 +206,6 @@ function addBooksToLibrary(book) {
   bookPages.appendChild(pagesContent);
   const plusIcon = document.createElement("i");
   plusIcon.classList.add("fas", "fa-plus-circle");
-  // Add an event listener to the plus icon
-  plusIcon.addEventListener("click", function(){
-    // Update "Plan To Read" status to "Reading" status
-    let currentStatusArray = document.querySelectorAll(".current-status");
-    currentStatusArray.forEach(function(currentStatus){
-      if(currentStatus.textContent === "Book Status: Plan To Read") {
-        book.bookStatus = "Reading";
-        currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
-
-        let updateStatusArray = Array.from(document.querySelectorAll(".update-book-status"));
-        updateStatusArray[bookLibrary.indexOf(book)].value = "Reading";
-      }
-      storeToLocalStorage();
-    });
-
-    let pageNumberArray = document.querySelectorAll(".library-book input");
-    let pageNumber = + pageNumberArray[bookLibrary.indexOf(book)].value;
-    let pageValue = 0;
-    pageValue = ++ pageNumber;
-    let pageValues = document.querySelectorAll(".library-book input");
-    pageValues[bookLibrary.indexOf(book)].setAttribute("value", `${pageValue}`);
-    book.currentPageNumber = pageValue;
-    storeToLocalStorage();
-  });
-
   bookPages.appendChild(plusIcon);
   libraryBook.appendChild(bookPages);
 
@@ -273,6 +248,31 @@ function addBooksToLibrary(book) {
   
   const libraryBooks = document.querySelector("#library-books");
   libraryBooks.appendChild(libraryBook);
+
+  // Add an event listener to the plus icon
+  plusIcon.addEventListener("click", function(){
+    // Update "Plan To Read" status to "Reading" status
+    let currentStatusArray = document.querySelectorAll(".current-status");
+    let updateStatusArray = Array.from(document.querySelectorAll(".update-book-status"));
+    let currentStatus = currentStatusArray[bookLibrary.indexOf(book)];
+
+    if(currentStatus.textContent === "Book Status: Plan To Read") {
+      book.bookStatus = "Reading";
+      currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
+      updateStatusArray[bookLibrary.indexOf(book)].value = "Reading";
+    }
+    storeToLocalStorage();
+
+    let pageNumberArray = document.querySelectorAll(".library-book input");
+    let pageNumber = + pageNumberArray[bookLibrary.indexOf(book)].value;
+    let pageValue = 0;
+    pageValue = ++ pageNumber;
+    let pageValues = document.querySelectorAll(".library-book input");
+    pageValues[bookLibrary.indexOf(book)].setAttribute("value", `${pageValue}`);
+    book.currentPageNumber = pageValue;
+    storeToLocalStorage();
+  });
+
 
   // Update "select" value for the "select" element
   let setSelectValueArray = Array.from(document.querySelectorAll(".update-book-status"));
