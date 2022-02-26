@@ -143,7 +143,7 @@ function executeRating(array) {
       j = array.indexOf(item); 
 
       // Check if the star is "active"/"inactive"
-      if (array.className === starClassInactive) {
+      if (item.className === starClassInactive) {
         for (j; j >= 0; --j) {
           array[j].className = starClassActive; // make the "inactive" stars "active"; increase rating
         }  
@@ -304,6 +304,7 @@ function addBooksToLibrary(book) {
   let individualRating = individualRatingArray[bookLibrary.indexOf(book)];
   let stars = Array.from(individualRating.children);
   executeRating(stars);
+  storeToLocalStorage();
   
   // Remove book from library
   removeBookButton.addEventListener("click", function(){
