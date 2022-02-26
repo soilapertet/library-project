@@ -131,26 +131,26 @@ function pushBookToArray() {
 }
 
 // Function for rating the books
-function executeRating(stars) {
+function executeRating(array) {
 
   const starClassActive = "rating__star fas fa-star";
   const starClassInactive = "rating__star far fa-star";
-  const starsLength = stars.length;
+  const starsLength = array.length;
   let j;
-  stars.map(function(star) {
-    star.onclick = function() {
+  array.map(function(item) {
+   item.onclick = function() {
       // set j to the value of the index of the star clicked
-      j = stars.indexOf(star); 
+      j = array.indexOf(item); 
 
       // Check if the star is "active"/"inactive"
-      if (star.className === starClassInactive) {
+      if (array.className === starClassInactive) {
         for (j; j >= 0; --j) {
-          stars[j].className = starClassActive; // make the "inactive" stars "active"; increase rating
-        } 
+          array[j].className = starClassActive; // make the "inactive" stars "active"; increase rating
+        }  
       } 
       else {
         for (j; j < starsLength; ++j) {
-          stars[j].className = starClassInactive; // make the "active" stars inactive; decrease rating
+          array[j].className = starClassInactive; // make the "active" stars inactive; decrease rating
         }
       }
     };
@@ -224,15 +224,20 @@ function addBooksToLibrary(book) {
 
   const bookRating = document.createElement("div");
   bookRating.classList.add("rating");
+  const ratingParagraph = document.createElement("p");
+  ratingParagraph.innerHTML = "Book Rating:";
+  bookRating.appendChild(ratingParagraph);
+  const ratingStars = document.createElement("div");
+  ratingStars.classList.add("rating-stars");
   const ratingContent = `
-    <p>Book Rating:</p>
     <i class="rating__star far fa-star"></i>
     <i class="rating__star far fa-star"></i>
     <i class="rating__star far fa-star"></i>
     <i class="rating__star far fa-star"></i>
     <i class="rating__star far fa-star"></i>
   `;
-  bookRating.innerHTML = ratingContent;
+  ratingStars.innerHTML = ratingContent;
+  bookRating.appendChild(ratingStars);
   libraryBook.appendChild(bookRating);
 
   const removeBook = document.createElement("div");
@@ -294,6 +299,12 @@ function addBooksToLibrary(book) {
       storeToLocalStorage();
   });
 
+  // Add a rating system to each book
+  let individualRatingArray = Array.from(document.querySelectorAll(".rating-stars"));
+  let individualRating = individualRatingArray[bookLibrary.indexOf(book)];
+  let stars = Array.from(individualRating.children);
+  executeRating(stars);
+  
   // Remove book from library
   removeBookButton.addEventListener("click", function(){
     bookLibrary.splice(bookLibrary.indexOf(book), 1);
