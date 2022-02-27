@@ -63,7 +63,22 @@ function closePopupForm() {
 openFormButton.addEventListener("click", openPopupForm);
 closeFormButton.addEventListener("click", closePopupForm);
 
+// Toggle Menu
+const menuToggle = document.querySelector(".menu-toggle");
+const hamburgerMenu = Array.from(document.querySelectorAll(".menu-toggle > span"));
+const navBar = document.querySelector(".nav-bar");
+const navRight = document.querySelector(".nav-right");
 
+// Add event listeners to toggle menu
+menuToggle.addEventListener("click", () => {
+  menuToggle.classList.toggle("active");
+  hamburgerMenu.forEach((item) => {
+    item.classList.toggle("active");
+  });
+  navBar.classList.toggle("active");
+  navRight.classList.toggle("active");
+  overlay.classList.toggle("show");
+});
 // Loop through the NodeList and checked which radio button is checked
 function collectRadioValue () {
 
