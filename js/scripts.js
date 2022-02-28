@@ -126,12 +126,14 @@ const setCurrentPageNumber = () => {
   return currentPage;
 }
 
+
 const trackBookNumber = () => {
   if(collectRadioValue() === "Plan To Read") {
     trackPlannedBooks = ++plannedBooks;
     trackReadingBooks = 0;
     trackCompletedBooks = 0;
     trackTotalBooks = ++totalBooks;
+
     document.querySelector("#planned-books").setAttribute("value", trackPlannedBooks);
     document.querySelector("#total-books").setAttribute("value", trackTotalBooks);
   } 
@@ -140,17 +142,21 @@ const trackBookNumber = () => {
     trackReadingBooks = ++readingBooks;
     trackCompletedBooks = 0;
     trackTotalBooks = ++totalBooks;
+
     document.querySelector("#reading-books").setAttribute("value",trackReadingBooks);
     document.querySelector("#total-books").setAttribute("value", trackTotalBooks);
+
   } 
   else {
     trackPlannedBooks = 0;
     trackReadingBooks = 0;
     trackCompletedBooks = ++completedBooks;
     trackTotalBooks = ++totalBooks;
+
     document.querySelector("#completed-books").setAttribute("value", trackCompletedBooks);
     document.querySelector("#total-books").setAttribute("value", trackTotalBooks);
   }
+  return trackPlannedBooks,trackReadingBooks, trackCompletedBooks, trackTotalBooks;
 }
 
 // Add event listeners to radio buttons to set value for current page
@@ -176,7 +182,7 @@ function pushBookToArray() {
   let inputtedNumberOfPages = + document.querySelector("#total-pages").value;
   trackBookNumber();
 
-  let book = new Book (
+  const book = new Book (
     inputtedTitle,
     inputtedAuthor,
     collectRadioValue(), // return radioValue
@@ -217,26 +223,6 @@ function executeRating(array) {
         }
       }
     };
-  });
-}
-
-function addBookToLibraryGrid() {
-
-  initiateBookLibrary();
-  pushBookToArray();
-  updateLibraryGrid();
-
-}
-
-// Update library grid on the page
-function updateLibraryGrid () {
-
-  resetLibraryGrid();
-  initiateBookLibrary();
-
-  bookLibrary.map(function(book){
-    addBooksToLibrary(book);
-    storeToLocalStorage();
   });
 }
 
@@ -328,8 +314,6 @@ function addBooksToLibrary(book) {
       book.bookStatus = "Reading";
       currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
       updateStatusArray[bookLibrary.indexOf(book)].value = "Reading";
-      document.querySelector("#planned-books").value = --plannedBooks;
-      document.querySelector("#reading-books").value = ++readingBooks;
     }
     storeToLocalStorage();
 
@@ -353,14 +337,6 @@ function addBooksToLibrary(book) {
   // Add 'change' event listener to the 'select' elements to change status if book is completed
     newSelectValue.addEventListener("change", (event) => {
       if(event.target.value === "Completed"){
-        if(book.bookStatus === "Plan To Read") {
-          document.querySelector("#planned-books").value = --plannedBooks;
-          document.querySelector("#completed-books").value = ++ completedBooks;
-        } else {
-          document.querySelector("#reading-books").value = --readingBooks;
-          document.querySelector("#completed-books").value = ++ completedBooks;
-        }
-
         book.bookStatus = event.target.value;
         currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
 
@@ -369,7 +345,6 @@ function addBooksToLibrary(book) {
         Pages: <input type="text" id="page-number" value="${book.currentPageNumber}">/${book.totalPageNumber}
       `;
       }
-
       storeToLocalStorage();
   });
 
@@ -379,13 +354,37 @@ function addBooksToLibrary(book) {
   let stars = Array.from(individualRating.children);
   executeRating(stars);
   storeToLocalStorage();
-  
+
   // Remove book from library
   removeBookButton.addEventListener("click", function(){
     bookLibrary.splice(bookLibrary.indexOf(book), 1);
     storeToLocalStorage();
     updateLibraryGrid();
   });
+
+  // Update the figure for total number of books
+  document.querySelector("#total-books").setAttribute("value", book.total);
+}
+
+function addBookToLibraryGrid() {
+
+  initiateBookLibrary();
+  pushBookToArray();
+  updateLibraryGrid();
+}
+
+// Update library grid on the page
+function updateLibraryGrid () {
+
+  resetLibraryGrid();
+  initiateBookLibrary();
+
+  bookLibrary.map(function(book){
+    addBooksToLibrary(book);
+    updateBookSummary(book);
+    storeToLocalStorage();
+  });
+
 }
 
 const inputForm = document.querySelector(".input-form");
