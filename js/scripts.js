@@ -1,5 +1,12 @@
 // Declare variables
 let statusArray, radioValue,  i, currentPage, pageValue, bookLibrary;
+let plannedBooks, readingBooks, completedBooks, totalBooks;
+let trackPlannedBooks, trackReadingBooks, trackCompletedBooks, trackTotalBooks;
+
+plannedBooks = + document.querySelector("#planned-books").value;
+readingBooks = + document.querySelector("#reading-books").value;
+completedBooks = + document.querySelector("#completed-books").value;
+totalBooks = + document.querySelector("#total-books").value;
 
 // Initiate bookLibrary array
 function initiateBookLibrary() {
@@ -25,6 +32,10 @@ class Book {
     bookStatus,
     currentPageNumber,
     totalPageNumber,
+    planning,
+    reading,
+    completed,
+    total
   )
   {
     this.title = title;
@@ -32,6 +43,10 @@ class Book {
     this.bookStatus = bookStatus;
     this.currentPageNumber = currentPageNumber;
     this.totalPageNumber = totalPageNumber;
+    this.planning = planning;
+    this.reading = reading;
+    this.completed = completed;
+    this.total = total;
   }
 }
 
@@ -79,6 +94,7 @@ menuToggle.addEventListener("click", () => {
   navRight.classList.toggle("active");
   overlay.classList.toggle("show");
 });
+
 // Loop through the NodeList and checked which radio button is checked
 function collectRadioValue () {
 
@@ -110,6 +126,33 @@ const setCurrentPageNumber = () => {
   return currentPage;
 }
 
+const trackBookNumber = () => {
+  if(collectRadioValue() === "Plan To Read") {
+    trackPlannedBooks = ++plannedBooks;
+    trackReadingBooks = 0;
+    trackCompletedBooks = 0;
+    trackTotalBooks = ++totalBooks;
+    document.querySelector("#planned-books").setAttribute("value", trackPlannedBooks);
+    document.querySelector("#total-books").setAttribute("value", trackTotalBooks);
+  } 
+  else if(collectRadioValue() === "Reading") {
+    trackPlannedBooks = 0;
+    trackReadingBooks = ++readingBooks;
+    trackCompletedBooks = 0;
+    trackTotalBooks = ++totalBooks;
+    document.querySelector("#reading-books").setAttribute("value",trackReadingBooks);
+    document.querySelector("#total-books").setAttribute("value", trackTotalBooks);
+  } 
+  else {
+    trackPlannedBooks = 0;
+    trackReadingBooks = 0;
+    trackCompletedBooks = ++completedBooks;
+    trackTotalBooks = ++totalBooks;
+    document.querySelector("#completed-books").setAttribute("value", trackCompletedBooks);
+    document.querySelector("#total-books").setAttribute("value", trackTotalBooks);
+  }
+}
+
 // Add event listeners to radio buttons to set value for current page
 const planToRead = document.querySelector("#plan-to-read");
 const reading = document.querySelector("#reading");
@@ -131,6 +174,7 @@ function pushBookToArray() {
   let inputtedTitle = document.querySelector("#title").value;
   let inputtedAuthor = document.querySelector("#author").value;
   let inputtedNumberOfPages = + document.querySelector("#total-pages").value;
+  trackBookNumber();
 
   let book = new Book (
     inputtedTitle,
@@ -138,6 +182,10 @@ function pushBookToArray() {
     collectRadioValue(), // return radioValue
     setCurrentPageNumber(), // return currentPage
     inputtedNumberOfPages,
+    trackPlannedBooks,
+    trackReadingBooks,
+    trackCompletedBooks,
+    trackTotalBooks
   ); 
 
   bookLibrary.push(book);
@@ -280,6 +328,8 @@ function addBooksToLibrary(book) {
       book.bookStatus = "Reading";
       currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
       updateStatusArray[bookLibrary.indexOf(book)].value = "Reading";
+      document.querySelector("#planned-books").value = --plannedBooks;
+      document.querySelector("#reading-books").value = ++readingBooks;
     }
     storeToLocalStorage();
 
@@ -303,6 +353,14 @@ function addBooksToLibrary(book) {
   // Add 'change' event listener to the 'select' elements to change status if book is completed
     newSelectValue.addEventListener("change", (event) => {
       if(event.target.value === "Completed"){
+        if(book.bookStatus === "Plan To Read") {
+          document.querySelector("#planned-books").value = --plannedBooks;
+          document.querySelector("#completed-books").value = ++ completedBooks;
+        } else {
+          document.querySelector("#reading-books").value = --readingBooks;
+          document.querySelector("#completed-books").value = ++ completedBooks;
+        }
+
         book.bookStatus = event.target.value;
         currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
 
@@ -311,6 +369,7 @@ function addBooksToLibrary(book) {
         Pages: <input type="text" id="page-number" value="${book.currentPageNumber}">/${book.totalPageNumber}
       `;
       }
+
       storeToLocalStorage();
   });
 
