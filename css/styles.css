@@ -238,6 +238,13 @@ nav {
   padding-bottom: 20px;
   border-bottom: 5px dashed #82c0cc;
 }
+.track-books {
+  border: none;
+  width: 50px;
+  font-size: 25px;
+  background-color: #f9f8f8;
+  font-family: 'Balsamiq Sans', cursive;
+}
 
 /******************** Footer Section ********************/
 .webpage-footer {
