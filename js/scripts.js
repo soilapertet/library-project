@@ -2,6 +2,9 @@
 let statusArray, radioValue,  i, currentPage, pageValue, bookLibrary;
 let plannedBooks, readingBooks, completedBooks, totalBooks;
 let trackPlannedBooks, trackReadingBooks, trackCompletedBooks, trackTotalBooks;
+let plannedCounter = 0;
+let readingCounter = 0;
+let completedCounter = 0;
 
 plannedBooks = + document.querySelector("#planned-books").value;
 readingBooks = + document.querySelector("#reading-books").value;
@@ -32,9 +35,6 @@ class Book {
     bookStatus,
     currentPageNumber,
     totalPageNumber,
-    planning,
-    reading,
-    completed,
     total
   )
   {
@@ -43,9 +43,6 @@ class Book {
     this.bookStatus = bookStatus;
     this.currentPageNumber = currentPageNumber;
     this.totalPageNumber = totalPageNumber;
-    this.planning = planning;
-    this.reading = reading;
-    this.completed = completed;
     this.total = total;
   }
 }
@@ -159,6 +156,20 @@ const trackBookNumber = () => {
   return trackPlannedBooks,trackReadingBooks, trackCompletedBooks, trackTotalBooks;
 }
 
+const updateBookSummary = (book) => {
+  
+  if(book.bookStatus === "Plan To Read") {
+    ++plannedCounter;
+    document.querySelector("#planned-books").setAttribute("value", plannedCounter);
+  } else if (book.bookStatus === "Reading") {
+    ++readingCounter;
+    document.querySelector("#reading-books").setAttribute("value", readingCounter);
+  } else {
+    ++completedCounter;
+    document.querySelector("#completed-books").setAttribute("value", completedCounter);
+  }
+}
+
 // Add event listeners to radio buttons to set value for current page
 const planToRead = document.querySelector("#plan-to-read");
 const reading = document.querySelector("#reading");
@@ -188,9 +199,6 @@ function pushBookToArray() {
     collectRadioValue(), // return radioValue
     setCurrentPageNumber(), // return currentPage
     inputtedNumberOfPages,
-    trackPlannedBooks,
-    trackReadingBooks,
-    trackCompletedBooks,
     trackTotalBooks
   ); 
 
@@ -381,8 +389,11 @@ function updateLibraryGrid () {
 
   bookLibrary.map(function(book){
     addBooksToLibrary(book);
-    updateBookSummary(book);
     storeToLocalStorage();
+  });
+  
+  bookLibrary.forEach((book) => {
+    updateBookSummary(book);
   });
 
 }
