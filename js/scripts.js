@@ -322,6 +322,14 @@ function addBooksToLibrary(book) {
       book.bookStatus = "Reading";
       currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
       updateStatusArray[bookLibrary.indexOf(book)].value = "Reading";
+
+      if(plannedBooks > 1) {
+        document.querySelector("#planned-books").setAttribute("value", --plannedBooks);
+      } else {
+        document.querySelector("#planned-books").setAttribute("value", "0");
+      }
+      document.querySelector("#reading-books").setAttribute("value", ++readingBooks);
+
     }
     storeToLocalStorage();
 
@@ -339,21 +347,36 @@ function addBooksToLibrary(book) {
   // Update "select" value for the "select" element
   let setSelectValueArray = Array.from(document.querySelectorAll(".update-book-status"));
   let newSelectValue = setSelectValueArray[bookLibrary.indexOf(book)];
+
+  let inputFieldArray = Array.from(document.querySelectorAll("#page-number"));
+  let inputField = inputFieldArray[bookLibrary.indexOf(book)];
   newSelectValue.value = book.bookStatus;
   storeToLocalStorage();
 
-  // Add 'change' event listener to the 'select' elements to change status if book is completed
-    newSelectValue.addEventListener("change", (event) => {
-      if(event.target.value === "Completed"){
-        book.bookStatus = event.target.value;
-        currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
+  // Add event listener to input field to change book status and page number if book is being read
+  inputField.addEventListener("input", () => {
+    book.currentPageNumber = inputField.value;
+    inputField.setAttribute("value", book.currentPageNumber);
+    storeToLocalStorage();
+  });
 
-        book.currentPageNumber = book.totalPageNumber;
-        pagesContent.innerHTML = `
-        Pages: <input type="text" id="page-number" value="${book.currentPageNumber}">/${book.totalPageNumber}
-      `;
-      }
-      storeToLocalStorage();
+  // Add 'change' event listener to the 'select' elements to change status if book is completed
+  newSelectValue.addEventListener("change", (event) => {
+    if(event.target.value === "Reading"){
+      book.bookStatus = event.target.value;
+      currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
+
+      
+    } else if(event.target.value === "Completed"){
+      book.bookStatus = event.target.value;
+      currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
+
+      book.currentPageNumber = book.totalPageNumber;
+      pagesContent.innerHTML = `
+      Pages: <input type="text" id="page-number" value="${book.currentPageNumber}">/${book.totalPageNumber}
+    `;
+    }
+    storeToLocalStorage();
   });
 
   // Add a rating system to each book
