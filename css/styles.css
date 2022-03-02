@@ -108,6 +108,33 @@ body {
     padding: 0 40px;
   }
 }
+.button-30 {
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  margin: 0 20px 10px 0;
+  border-radius: 10px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #82c0cc 0 -3px 0 inset;
+  transition: box-shadow .15s,transform .15s;
+  background-color: #82c0cc;
+  color: #f9f8f8;
+  font-size: 18px;
+  border: 2px solid #16697a;
+  cursor: pointer;
+  font-family: 'Balsamiq Sans', cursive;
+}
+.button-30:focus {
+  box-shadow: #82c0cc 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #82c0cc 0 -3px 0 inset;
+}
+.button-30:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #82c0cc 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+.button-30:active {
+  box-shadow: #82c0cc 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
 
 /****************** Header Section *********************/
 .webpage-header {
@@ -206,18 +233,18 @@ nav {
   right: 0;
   transition: 0.5s;
 }
-.nav-right ul{
-  position: absolute;
-  top: 12%;
-  right: 0;
-}
 .flex-container {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  position: absolute;
+  top: 12%;
+  right: 0;
 }
-.flex-container > li {
-  margin-bottom: 10px;
+.flex-container > h2 {
+  color:#82c0cc;
+  margin: 0 10px 0 0;
+
 }
 .book-summary {
   position: absolute;

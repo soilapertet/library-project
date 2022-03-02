@@ -5,9 +5,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carpe Librum</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>  
-  <script src="scripts.js" defer></script>
+  <script src="scripts.js" defer></script> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap" rel="stylesheet">
@@ -25,12 +26,10 @@
     </div>
     <nav class="nav-bar">
       <div class="nav-right">
-        <ul>
-          <div class="flex-container">
-            <li><i class="fas fa-user"> Sign In</i></li>
-            <li><i class="fas fa-moon"> Dark Mode</i></li>
-          </div>
-        </ul>
+        <div class="flex-container">
+          <button type="button" role="button" class="button-30" id="change-mode"> Change Mode</button>
+          <h2><i class="fa-solid fa-moon"></i> NOX!</h2>
+        </div>
         <section class="book-summary" style="color: black;">
           <h2><i class="fas fa-book"></i> Library Summary</h2>
           <p>Plan to read: <input type="number" class="track-books" id="planned-books" value="0"></p>
