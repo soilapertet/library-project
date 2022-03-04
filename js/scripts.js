@@ -22,6 +22,28 @@ function initiateBookLibrary() {
   return bookLibrary;
 }
 
+// Set mode of the webpage
+
+const html = document.querySelector("html");
+const mode = document.querySelector(".mode");
+const defaultMode =  '<i class="fa-solid fa-sun"></i>LUMOS!';
+const darkMode = '<i class="fa-solid fa-moon"></i>NOX!';
+
+function setMode(modeName, modeIcon) {
+  localStorage.setItem("webMode", modeName);
+  localStorage.setItem("modeIcon", modeIcon);
+  html.className = modeName;
+  mode.innerHTML = modeIcon;
+}
+
+(function() {
+  if(localStorage.getItem("webMode") === "dark-mode" && localStorage.getItem("modeIcon") === darkMode) {
+    setMode("dark-mode", darkMode);
+  } else {
+    setMode("default-mode", defaultMode);
+  }
+})();
+
 // Save data to local storage
 function storeToLocalStorage(){
   localStorage.setItem("bookLibrary", JSON.stringify(bookLibrary)); /** Saving any changes made to book object to local storage */
@@ -422,6 +444,7 @@ function updateLibraryGrid () {
 }
 
 const inputForm = document.querySelector(".input-form");
+const modeButton = document.querySelector("#change-mode");
 
 inputForm.addEventListener("submit", function(){
 event.preventDefault();
@@ -429,6 +452,16 @@ addBookToLibraryGrid();
 inputForm.reset();
 closePopupForm();
 });
+
+// Create a function to toggle the theme of the webpage
+function toggleMode() {
+  if(localStorage.getItem("webMode") === "dark-mode" && localStorage.getItem("modeIcon") === darkMode) {
+    setMode("default-mode", defaultMode);
+  } else {
+    setMode("dark-mode", darkMode);
+  }
+}
+modeButton.addEventListener("click", toggleMode);
 
 window.addEventListener("load", function(){
   libraryMessage.style.marginTop = "2vw"; 
