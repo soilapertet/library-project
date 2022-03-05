@@ -2,14 +2,22 @@
 let statusArray, radioValue,  i, currentPage, pageValue, bookLibrary;
 let plannedBooks, readingBooks, completedBooks, totalBooks;
 let trackPlannedBooks, trackReadingBooks, trackCompletedBooks, trackTotalBooks;
-let plannedCounter = 0;
-let readingCounter = 0;
-let completedCounter = 0;
+let plannedCounter, readingCounter, completedCounter, totalCounter;
 
 plannedBooks = + document.querySelector("#planned-books").value;
 readingBooks = + document.querySelector("#reading-books").value;
 completedBooks = + document.querySelector("#completed-books").value;
 totalBooks = + document.querySelector("#total-books").value;
+
+trackPlannedBooks = document.querySelector("#planned-books");
+trackReadingBooks = document.querySelector("#reading-books");
+trackCompletedBooks = document.querySelector("#completed-books");
+trackTotalBooks = document.querySelector("#total-books");
+
+plannedCounter = 0;
+readingCounter = 0;
+completedCounter = 0;
+totalCounter = 0;
 
 // Initiate bookLibrary array
 function initiateBookLibrary() {
@@ -22,8 +30,12 @@ function initiateBookLibrary() {
   return bookLibrary;
 }
 
-// Set mode of the webpage
+// Save data to local storage
+function storeToLocalStorage(){
+  localStorage.setItem("bookLibrary", JSON.stringify(bookLibrary)); /** Saving any changes made to book object to local storage */
+}
 
+// Set mode of the webpage
 const html = document.querySelector("html");
 const mode = document.querySelector(".mode");
 const defaultMode =  '<i class="fa-solid fa-sun"></i>LUMOS!';
@@ -44,10 +56,36 @@ function setMode(modeName, modeIcon) {
   }
 })();
 
-// Save data to local storage
-function storeToLocalStorage(){
-  localStorage.setItem("bookLibrary", JSON.stringify(bookLibrary)); /** Saving any changes made to book object to local storage */
+const updateBookTracker = () => {
+  
+  plannedCounter = localStorage.getItem("plannedBooks");
+  readingCounter = localStorage.getItem("readingBooks");
+  completedCounter = localStorage.getItem("completedBooks");
+  totalCounter = localStorage.getItem("totalBooks");
+
+  trackPlannedBooks.innerHTML = plannedCounter;
+  trackReadingBooks.innerHTML = readingCounter;
+  trackCompletedBooks.innerHTML = completedCounter;
+  trackTotalBooks.innerHTML = totalCounter;
 }
+
+const setBookTracker = (plannedCounter, readingCounter, completedCounter, totalCounter) => {
+
+  localStorage.setItem("plannedBooks", plannedCounter);
+  localStorage.setItem("readingBooks", readingCounter);
+  localStorage.setItem("completedBooks", completedCounter);
+  localStorage.setItem("totalBooks", totalCounter);
+
+  console.log(plannedCounter);
+  console.log(readingCounter);
+  console.log(completedCounter);
+  console.log(totalCounter);
+
+  trackPlannedBooks.innerHTML = plannedCounter;
+  trackReadingBooks.innerHTML = readingCounter;
+  trackCompletedBooks.innerHTML = completedCounter;
+  trackTotalBooks.innerHTML = totalCounter;
+};
 
 // Class function
 class Book {
@@ -57,15 +95,37 @@ class Book {
     bookStatus,
     currentPageNumber,
     totalPageNumber,
-    total
   )
   {
     this.title = title;
     this.author = author;
     this.bookStatus = bookStatus;
+    if(this.bookStatus === "Plan To Read") {
+      ++ plannedCounter;
+      readingCounter;
+      completedCounter;
+      ++ totalCounter;
+
+      setBookTracker(plannedCounter, readingCounter, completedCounter, totalCounter);
+    } 
+    else if (this.bookStatus === "Reading") {
+      plannedCounter;
+      ++ readingCounter;
+      completedCounter;
+      ++ totalCounter;
+
+      setBookTracker(plannedCounter, readingCounter, completedCounter, totalCounter);
+    } 
+    else {
+      plannedCounter;
+      readingCounter;
+      ++ completedCounter
+      ++ totalCounter;
+
+      setBookTracker(plannedCounter, readingCounter, completedCounter, totalCounter);
+    }
     this.currentPageNumber = currentPageNumber;
     this.totalPageNumber = totalPageNumber;
-    this.total = total;
   }
 }
 
@@ -145,53 +205,6 @@ const setCurrentPageNumber = () => {
   return currentPage;
 }
 
-
-const trackBookNumber = () => {
-  if(collectRadioValue() === "Plan To Read") {
-    trackPlannedBooks = ++plannedBooks;
-    trackReadingBooks = 0;
-    trackCompletedBooks = 0;
-    trackTotalBooks = ++totalBooks;
-
-    document.querySelector("#planned-books").setAttribute("value", trackPlannedBooks);
-    document.querySelector("#total-books").setAttribute("value", trackTotalBooks);
-  } 
-  else if(collectRadioValue() === "Reading") {
-    trackPlannedBooks = 0;
-    trackReadingBooks = ++readingBooks;
-    trackCompletedBooks = 0;
-    trackTotalBooks = ++totalBooks;
-
-    document.querySelector("#reading-books").setAttribute("value",trackReadingBooks);
-    document.querySelector("#total-books").setAttribute("value", trackTotalBooks);
-
-  } 
-  else {
-    trackPlannedBooks = 0;
-    trackReadingBooks = 0;
-    trackCompletedBooks = ++completedBooks;
-    trackTotalBooks = ++totalBooks;
-
-    document.querySelector("#completed-books").setAttribute("value", trackCompletedBooks);
-    document.querySelector("#total-books").setAttribute("value", trackTotalBooks);
-  }
-  return trackPlannedBooks,trackReadingBooks, trackCompletedBooks, trackTotalBooks;
-}
-
-const updateBookSummary = (book) => {
-  
-  if(book.bookStatus === "Plan To Read") {
-    ++plannedCounter;
-    document.querySelector("#planned-books").setAttribute("value", plannedCounter);
-  } else if (book.bookStatus === "Reading") {
-    ++readingCounter;
-    document.querySelector("#reading-books").setAttribute("value", readingCounter);
-  } else {
-    ++completedCounter;
-    document.querySelector("#completed-books").setAttribute("value", completedCounter);
-  }
-}
-
 // Add event listeners to radio buttons to set value for current page
 const planToRead = document.querySelector("#plan-to-read");
 const reading = document.querySelector("#reading");
@@ -213,7 +226,6 @@ function pushBookToArray() {
   let inputtedTitle = document.querySelector("#title").value;
   let inputtedAuthor = document.querySelector("#author").value;
   let inputtedNumberOfPages = + document.querySelector("#total-pages").value;
-  trackBookNumber();
 
   const book = new Book (
     inputtedTitle,
@@ -221,7 +233,6 @@ function pushBookToArray() {
     collectRadioValue(), // return radioValue
     setCurrentPageNumber(), // return currentPage
     inputtedNumberOfPages,
-    trackTotalBooks
   ); 
 
   bookLibrary.push(book);
@@ -345,13 +356,11 @@ function addBooksToLibrary(book) {
       currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
       updateStatusArray[bookLibrary.indexOf(book)].value = "Reading";
 
-      if(plannedBooks > 1) {
-        document.querySelector("#planned-books").setAttribute("value", --plannedBooks);
-      } else {
-        document.querySelector("#planned-books").setAttribute("value", "0");
-      }
-      document.querySelector("#reading-books").setAttribute("value", ++readingBooks);
-
+      --plannedCounter;
+      ++readingCounter;
+      completedCounter = 0;
+      totalCounter;
+      setBookTracker(plannedCounter, readingCounter, completedCounter, totalCounter);
     }
     storeToLocalStorage();
 
@@ -385,11 +394,39 @@ function addBooksToLibrary(book) {
   // Add 'change' event listener to the 'select' elements to change status if book is completed
   newSelectValue.addEventListener("change", (event) => {
     if(event.target.value === "Reading"){
-      book.bookStatus = event.target.value;
-      currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
-
-      
-    } else if(event.target.value === "Completed"){
+      switch(true){
+        case book.bookStatus === "Plan To Read":
+          book.bookStatus = event.target.value;
+          currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
+    
+          --plannedCounter;
+          ++readingCounter;
+          completedCounter = 0;
+          totalCounter;
+          setBookTracker(plannedCounter, readingCounter, completedCounter, totalCounter);
+        default:
+          console.error("An error has occured");
+      }
+    } 
+    else if(event.target.value === "Completed"){
+      switch(true) {
+        case book.bookStatus === "Plan To Read":
+          --plannedCounter;
+          readingCounter;
+          ++completedCounter;
+          totalCounter;
+          setBookTracker(plannedCounter, readingCounter, completedCounter, totalCounter);
+          break;
+        case book.bookStatus === "Reading":
+          plannedCounter;
+          --readingCounter;
+          ++completedCounter;
+          setBookTracker(plannedCounter, readingCounter, completedCounter, totalCounter);
+          break;
+        default:
+          console.error("An error occured.");
+      }
+      }
       book.bookStatus = event.target.value;
       currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
 
@@ -397,9 +434,8 @@ function addBooksToLibrary(book) {
       pagesContent.innerHTML = `
       Pages: <input type="text" id="page-number" value="${book.currentPageNumber}">/${book.totalPageNumber}
     `;
-    }
     storeToLocalStorage();
-  });
+});
 
   // Add a rating system to each book
   let individualRatingArray = Array.from(document.querySelectorAll(".rating-stars"));
@@ -414,14 +450,12 @@ function addBooksToLibrary(book) {
     storeToLocalStorage();
     updateLibraryGrid();
   });
-
-  // Update the figure for total number of books
-  document.querySelector("#total-books").setAttribute("value", book.total);
 }
 
 function addBookToLibraryGrid() {
 
   initiateBookLibrary();
+  // initiateBookTracker();
   pushBookToArray();
   updateLibraryGrid();
 }
@@ -437,20 +471,17 @@ function updateLibraryGrid () {
     storeToLocalStorage();
   });
   
-  bookLibrary.forEach((book) => {
-    updateBookSummary(book);
-  });
-
 }
 
 const inputForm = document.querySelector(".input-form");
 const modeButton = document.querySelector("#change-mode");
 
 inputForm.addEventListener("submit", function(){
-event.preventDefault();
-addBookToLibraryGrid();
-inputForm.reset();
-closePopupForm();
+
+  event.preventDefault();
+  addBookToLibraryGrid();
+  inputForm.reset();
+  closePopupForm();
 });
 
 // Create a function to toggle the theme of the webpage
@@ -467,6 +498,7 @@ window.addEventListener("load", function(){
   libraryMessage.style.marginTop = "2vw"; 
   libraryMessageHeading.classList.add("hide");
   libraryMessageImage.classList.add("hide");
+  updateBookTracker();
   updateLibraryGrid();
 });
 

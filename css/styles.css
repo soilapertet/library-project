@@ -295,14 +295,14 @@ nav {
   padding-bottom: 20px;
   border-bottom: 5px dashed var(--bookSummaryBorder);
 }
-.track-books {
+/* .track-books {
   border: none;
   width: 50px;
   font-size: 25px;
   background-color: var(--bodyBackground);
   color:var(--textColour);
   font-family: 'Balsamiq Sans', cursive;
-}
+} */
 
 /******************** Footer Section ********************/
 .webpage-footer {
