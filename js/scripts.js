@@ -76,11 +76,6 @@ const setBookTracker = (plannedCounter, readingCounter, completedCounter, totalC
   localStorage.setItem("completedBooks", completedCounter);
   localStorage.setItem("totalBooks", totalCounter);
 
-  console.log(plannedCounter);
-  console.log(readingCounter);
-  console.log(completedCounter);
-  console.log(totalCounter);
-
   trackPlannedBooks.innerHTML = plannedCounter;
   trackReadingBooks.innerHTML = readingCounter;
   trackCompletedBooks.innerHTML = completedCounter;
@@ -132,7 +127,6 @@ class Book {
 // Open and Close popup form 
 const libraryMessage = document.querySelector(".library-message");
 const libraryMessageHeading= document.querySelector(".library-message h1");
-const libraryMessageImage= document.querySelector(".library-message img");
 const popUpForm = document.querySelector("#popup-form");
 const overlay = document.querySelector(".overlay");
 const openFormButton = document.querySelector("#open-form");
@@ -446,16 +440,46 @@ function addBooksToLibrary(book) {
 
   // Remove book from library
   removeBookButton.addEventListener("click", function(){
+
     bookLibrary.splice(bookLibrary.indexOf(book), 1);
     storeToLocalStorage();
     updateLibraryGrid();
+    switch(true) {
+      case book.bookStatus === "Plan To Read":
+        --plannedCounter;
+        readingCounter;
+        completedCounter;
+        --totalCounter;
+        setBookTracker(plannedCounter, readingCounter, completedCounter, totalCounter);
+        break;
+      case book.bookStatus === "Reading":
+        plannedCounter;
+        --readingCounter;
+        completedCounter;
+        --totalCounter;
+        setBookTracker(plannedCounter, readingCounter, completedCounter, totalCounter);
+        break;
+      case book.bookStatus === "Completed":
+        plannedCounter;
+        readingCounter;
+        --completedCounter;
+        --totalCounter;
+        setBookTracker(plannedCounter, readingCounter, completedCounter, totalCounter);
+        break;
+      default:
+        console.error("An error occured");
+    }
+
+    if(JSON.parse(localStorage.getItem("bookLibrary") === "[]")) {
+      libraryMessageHeading.classList.remove("hide");
+    }
+
   });
 }
 
 function addBookToLibraryGrid() {
 
   initiateBookLibrary();
-  // initiateBookTracker();
   pushBookToArray();
   updateLibraryGrid();
 }
@@ -494,11 +518,18 @@ function toggleMode() {
 }
 modeButton.addEventListener("click", toggleMode);
 
-window.addEventListener("load", function(){
-  libraryMessage.style.marginTop = "2vw"; 
-  libraryMessageHeading.classList.add("hide");
-  libraryMessageImage.classList.add("hide");
+window.addEventListener("load", function() {
+
+  if(JSON.parse(localStorage.getItem("bookLibrary") === "[]")) {
+    libraryMessageHeading.classList.remove("hide");
+  } else {
+    libraryMessage.style.marginTop = "2vw"; 
+    libraryMessageHeading.classList.add("hide");
+    libraryMessageImage.classList.add("hide");
+  }
+
   updateBookTracker();
   updateLibraryGrid();
+
 });
 

@@ -28,6 +28,7 @@
   --bookSummaryBorder: var(--headerBackground);
   --footerColour: var(--bodyBackground);
   --button30: var(--bodyBackground);
+  --libraryMessage: var(--headerBackground);
 }
 
 .dark-mode{
@@ -49,6 +50,7 @@
   --bookSummaryBorder: var(--bookBorder);
   --footerColour: var(--bookBorder);
   --button30: var(--bookBorder);
+  --libraryMessage: var(--bookBorder);
 }
 
 /******************* Global Styles ********************/
@@ -295,14 +297,6 @@ nav {
   padding-bottom: 20px;
   border-bottom: 5px dashed var(--bookSummaryBorder);
 }
-/* .track-books {
-  border: none;
-  width: 50px;
-  font-size: 25px;
-  background-color: var(--bodyBackground);
-  color:var(--textColour);
-  font-family: 'Balsamiq Sans', cursive;
-} */
 
 /******************** Footer Section ********************/
 .webpage-footer {
@@ -340,14 +334,11 @@ nav {
   line-height: 38px;
 }
 .library-message h1 {
-  margin-bottom: 0;
+  margin-bottom: 20px;
   font-size: 45px;
+  color: var(--libraryMessage);
 }
-.library-message img {
-  width: 90px;
-  height: 90px;
-  margin: 10px 0 10px 0;
-}
+
 .library-message h1.hide, .library-message img.hide {
   display: none;
 }
