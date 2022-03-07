@@ -427,6 +427,7 @@ nav {
   line-height: 38px;
 }
 .library-message h1 {
+  text-align: center;
   margin-bottom: 20px;
   font-size: 45px;
   color: var(--libraryMessage);
