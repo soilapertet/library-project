@@ -519,7 +519,7 @@ modeButton.addEventListener("click", toggleMode);
 
 window.addEventListener("load", function() {
 
-  if(JSON.parse(localStorage.getItem("bookLibrary") === "[]")) {
+  if(JSON.parse(localStorage.getItem("bookLibrary") === null) || JSON.parse(localStorage.getItem("bookLibrary") === "[]")) {
     libraryMessageHeading.classList.remove("hide");
   } else {
     libraryMessage.style.marginTop = "2vw"; 
