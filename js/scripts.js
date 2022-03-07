@@ -135,7 +135,6 @@ const closeFormButton = document.querySelector("#close-form");
 function openPopupForm() {
   libraryMessage.style.marginTop = "2vw"; 
   libraryMessageHeading.classList.add("hide");
-  libraryMessageImage.classList.add("hide");
   popUpForm.classList.remove("hide");
   popUpForm.classList.add("show");
   overlay.classList.add("show");
@@ -420,14 +419,14 @@ function addBooksToLibrary(book) {
         default:
           console.error("An error occured.");
       }
-      }
+
       book.bookStatus = event.target.value;
       currentBookStatus.innerHTML = `Book Status: ${book.bookStatus}`;
 
       book.currentPageNumber = book.totalPageNumber;
       pagesContent.innerHTML = `
-      Pages: <input type="text" id="page-number" value="${book.currentPageNumber}">/${book.totalPageNumber}
-    `;
+      Pages: <input type="text" id="page-number" value="${book.currentPageNumber}">/${book.totalPageNumber}`;
+      }
     storeToLocalStorage();
 });
 
@@ -525,7 +524,6 @@ window.addEventListener("load", function() {
   } else {
     libraryMessage.style.marginTop = "2vw"; 
     libraryMessageHeading.classList.add("hide");
-    libraryMessageImage.classList.add("hide");
   }
 
   updateBookTracker();
