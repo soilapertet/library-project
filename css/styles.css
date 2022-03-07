@@ -297,18 +297,101 @@ nav {
   padding-bottom: 20px;
   border-bottom: 5px dashed var(--bookSummaryBorder);
 }
+@media screen and (min-width: 350px) and (max-width: 850px) {
+  nav{
+    width: 100vw;
+    height: 72vh;
+  }
+  .nav-right{
+    width: 100vw;
+    height: 72vh;
+    position: relative;
+    top: -500%;
+    left: 0;
+    transition: 2.0s;
+  }
+  .nav-right.active {
+    top: 0;
+    transition: 1.0s;
+  }
+  .flex-container {
+    display: inline;
+    top: 20px;
+    left: 10%;
+  }
+  .book-summary {
+    top: 80px;
+    width: 70vw;
+  }
+}
+@media screen and (min-width: 851px) and (max-width: 1300px) {
+  nav{
+    width: 30vw;
+    height: 100vh;
+  }
+  .nav-right{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    top: 0;
+    right: -100%;
+    transition: 2.0s;
+  }
+  .nav-right.active {
+    right: 10vw;
+    transition: 1.0s;
+  }
+  .flex-container {
+    display: inline-block;
+    top: 50px;
+    left: 5%;
+  }
+  .book-summary {
+    top: 120px;
+    width: 30vw;
+    left: 5vw;
+  }
+}
+@media screen and (min-width: 1300px) and (max-width: 1300px) {
+  nav{
+    width: 30vw;
+    height: 100vh;
+  }
+  .nav-right{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    top: 0;
+    right: -100%;
+    transition: 2.0s;
+  }
+  .nav-right.active {
+    right: 10vw;
+    transition: 1.0s;
+  }
+  .flex-container {
+    display: inline-block;
+    top: 50px;
+    left: 5%;
+  }
+  .book-summary {
+    top: 120px;
+    width: 30vw;
+    left: 5vw;
+  }
+}
 
 /******************** Footer Section ********************/
 .webpage-footer {
+  position: absolute;
+  bottom: 0;
+  height: 70px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: var(--headerBackground);
   color:var(--footerColour);
-  height: 70px;
-  width: 30%;
-  position: fixed;
-  bottom: 0;
 }
 .webpage-footer h2 {
   padding: 10px;
@@ -323,7 +406,17 @@ nav {
 .fa-github {
   font-size: 40px;
 }
+@media screen and (min-width: 350px) and (max-width: 850px) {
+  .webpage-footer {
+    width: 100vw;
+  }
+}
+@media screen and (min-width: 851px) and (max-width: 1300px) {
+  .webpage-footer {
+    width: 40vw;
+  }
 
+}
 /******************** Library Message Section    *************************/
 .library-message {
   display: flex;
@@ -491,6 +584,28 @@ nav {
   align-self: flex-start;
   margin: 20px auto;
 }
+@media screen and (max-width: 490px) {
+  #popup-form{
+    top: 20vh;
+    left: 10vw;
+    width: 80vw;
+  }
+}
+@media screen and (min-width: 491px) and (max-width: 667px) {
+  #popup-form {
+    top: 20vh;
+    left: 22vw;
+    width: 55vw;
+  }
+}
+@media screen and (min-width: 668px) and (max-width: 980px) {
+  #popup-form {
+    top: 20vh;
+    left: 30vw;
+    width: 40vw;
+  }
+}
+
 
 /**************** Overlay *****************/
 .overlay {
